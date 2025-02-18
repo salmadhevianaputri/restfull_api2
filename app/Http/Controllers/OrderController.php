@@ -58,3 +58,15 @@ public function destroy($id)
 
     return response()->json(['message' => 'Order deleted successfully']);
 }
+
+public function store(Request $request)
+{
+    $request->validate([
+        'product_id' => 'required',
+        'customer_id' => 'required|exists:customers,id',
+        // tambahkan validasi lainnya sesuai kebutuhan
+    ]);
+
+    $order = Order::create($request->all());
+    return response()->json($order, 201);
+}
